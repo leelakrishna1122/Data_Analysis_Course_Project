@@ -1,53 +1,62 @@
-#### Data Cleaning Process Using OpenRefine
-1. Project Creation
-Imported the dataset into OpenRefine and initialized the cleaning process.
+##  Data Cleaning Process Using OpenRefine
 
-2. Handling Missing and Unwanted Data
-Removed 30 blank rows to ensure a clean dataset.
+### 1. Project Initialization
+- Imported the raw dataset into OpenRefine.
+- Initiated the data cleaning workflow.
 
-Deleted the "Unnamed: 0" column, which was unnecessary.
+---
 
-3. Standardizing Text Data
-Applied text trimming to remove extra spaces in the columns "Company" and "TypeName" using GREL.
+### 2. Handling Missing and Unnecessary Data
+- Removed **30 blank rows** to ensure data consistency.
+- Deleted the **"Unnamed: 0"** column as it was redundant.
 
-Performed multiple mass edits in the "TypeName" and "ScreenResolution" columns to standardize values.
+---
 
-Used GREL expressions to remove redundant phrases like "Full HD," "Touchscreen," "4K Ultra HD," "IPS Panel," etc., from the "ScreenResolution" column.
+### 3.  Standardizing Text Fields
+- **Trimmed extra spaces** in the `Company` and `TypeName` columns using GREL (`value.trim()`).
+- Performed **mass edits** in:
+  - `TypeName` (e.g., standardizing variations like "Notebook", "Ultrabook", etc.)
+  - `ScreenResolution` (e.g., fixing inconsistent formats)
+- Used GREL to **remove redundant terms** from `ScreenResolution`, such as:
+  - `"Full HD"`, `"Touchscreen"`, `"4K Ultra HD"`, `"IPS Panel"`, etc.
 
-4. Cleaning and Formatting CPU Data
-Used GREL transformations to standardize CPU names (e.g., removing duplicate prefixes like "A10-" and "A9-").
+---
 
-Standardized case formatting (e.g., "x5" to "X5", "HZ" to "Hz", "m" to "M", "v" to "V").
+### 4. Cleaning and Formatting CPU Data
+- Standardized CPU names (e.g., removed duplicate prefixes like `"A10-"`, `"A9-"`).
+- Normalized case formatting:
+  - `"x5"` ➝ `"X5"`, `"HZ"` ➝ `"Hz"`, `"m"` ➝ `"M"`, `"v"` ➝ `"V"`.
+- Used **mass edits** to correct inconsistent CPU values.
 
-Performed mass edits to correct inconsistent CPU values.
+---
 
-5. Formatting Numerical Data
-Converted values in "Weight", "Price", and "Inches" columns into numeric format using GREL transformations.
+### 5. Formatting Numerical Columns
+- Converted the following columns to **numeric format**:
+  - `Weight`, `Price`, `Inches`
+- Applied GREL to:
+  - Remove `"kg"` from `Weight`, then round to **2 decimal places**.
+  - Replace `"gb"` with `"GB"` and `"flash storage"` with `"SSD"` in memory data.
+- Edited specific incorrect entries in memory-related fields.
 
-Removed "kg" from "Weight" and rounded values to two decimal places.
+---
 
-Standardized memory size formatting (e.g., replacing "gb" with "GB" and "flash storage" with "SSD").
+### 6. Handling Duplicates and Clustering
+- Created a new column: `Cluster Key` by concatenating:
+  - `Company`, `TypeName`, `Inches`, `ScreenResolution`, `Cpu`, `Ram`, `Memory`
+- Used **mass edits** to normalize `Cluster Key` values.
+- Removed `Cluster Key` after duplicate resolution.
 
-Edited specific incorrect memory values.
+---
 
-6. Handling Duplicates and Key Clustering
-Created a new column "Cluster Key" by concatenating "Company," "TypeName," "Inches," "ScreenResolution," "Cpu," "Ram," and "Memory" to identify duplicates.
+### 7.  Final Adjustments and Renaming
+- Renamed `Weight` ➝ `Weight(kg)` for clarity.
+- Rounded values in `Price` to whole numbers.
+- Performed final **mass edits and GREL transformations** for consistency.
 
-Performed mass edits to standardize the cluster key.
+---
 
-Removed the "Cluster Key" column after the necessary edits.
-
-7. Renaming and Final Adjustments
-Renamed the "Weight" column to "Weight(kg)" for clarity.
-
-Rounded values in the "Price" column to whole numbers.
-
-Final mass edits and transformations to ensure a clean, standardized dataset.
-
-8. Exporting the Cleaned Data
-Saved the cleaned dataset as "laptops_cleaned.csv" for further analysis.
-
-
+### 8. Exporting Cleaned Data
+- Exported the cleaned dataset as: `laptops_cleaned.csv`.
 
 
 
